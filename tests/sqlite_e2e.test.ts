@@ -16,29 +16,9 @@ suite("sqlite", () => {
   beforeEach(() => {
     db = new Database(":memory:");
 
-    const query: (sql: string) => Promise<unknown[]> = (sql: string) => {
-      return new Promise((resolve, reject) => {
-        try {
-          resolve(db.prepare(sql).all());
-        } catch (error) {
-          reject(error);
-        }
-      });
-    };
-    const exec: (sql: string) => Promise<void> = (sql: string) => {
-      return new Promise((resolve, reject) => {
-        try {
-          db.exec(sql);
-          resolve();
-        } catch (error) {
-          reject(error);
-        }
-      });
-    };
-
     migrator = new Migrator({
-      query,
-      exec,
+      query: (sql: string) => db.prepare(sql).all(),
+      exec: (sql: string) => db.exec(sql),
       migrationDir: path.join(__dirname, "base_migrations"),
       logger: nullLogger,
     });
@@ -97,6 +77,36 @@ suite("sqlite", () => {
     await expect(migrator.migrate()).rejects.toThrowError();
 
     const applied = await migrator.appliedMigrations();
+    expect(applied.length).toBe(3);
+  });
+
+  test("it supports async clients", async () => {
+    const query: (sql: string) => Promise<unknown[]> = (sql: string) => {
+      return new Promise((resolve, reject) => {
+        try {
+          resolve(db.prepare(sql).all());
+        } catch (error) {
+          reject(error);
+        }
+      });
+    };
+    const exec: (sql: string) => Promise<void> = (sql: string) => {
+      return new Promise((resolve, reject) => {
+        try {
+          db.exec(sql);
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+    };
+
+    migrator.query = query;
+    migrator.exec = exec;
+
+    await migrator.migrate();
+    const applied = await migrator.appliedMigrations();
+
     expect(applied.length).toBe(3);
   });
 });
