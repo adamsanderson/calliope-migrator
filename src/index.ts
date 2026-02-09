@@ -42,7 +42,11 @@ const DEFAULT_SPLIT = (sql: string) => [sql];
  *
  * Will yield two statements.  This should be relatively safe.
  */
-export const splitOnSemicolon = (sql: string) => sql.split(/;\s*$/gm);
+export const splitOnSemicolon = (sql: string) =>
+  sql
+    .split(/;\s*$/gm)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
 
 /**
  * Splits statements on series of dashes.
@@ -56,7 +60,11 @@ export const splitOnSemicolon = (sql: string) => sql.split(/;\s*$/gm);
  *
  * Will yield two statements.  This should be relatively safe.
  */
-export const splitOnDashes = (sql: string) => sql.split(/^\s*---+\s*$/gm);
+export const splitOnDashes = (sql: string) =>
+  sql
+    .split(/^\s*---+\s*$/gm)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
 
 /**
  * To silence Calliope, you can use the null logger.
