@@ -1,17 +1,17 @@
 {
-  "name": "tsdown-starter",
+  "name": "calliope-migrator",
   "type": "module",
-  "version": "0.0.0",
-  "description": "A starter for creating a TypeScript package.",
-  "author": "Author Name <author.name@mail.com>",
+  "version": "0.0.1",
+  "description": "The smallest functional SQL migrator.",
+  "author": "Adam Sanderson <netghost@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/author/library#readme",
+  "homepage": "https://github.com/adamsanderson/calliope-migrator#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/author/library.git"
+    "url": "git+https://github.com/adamsanderson/calliope-migrator.git"
   },
   "bugs": {
-    "url": "https://github.com/author/library/issues"
+    "url": "https://github.com/adamsanderson/calliope-migrator/issues"
   },
   "exports": {
     ".": "./dist/index.mjs",
@@ -35,8 +35,6 @@
     "@types/node": "^25.0.3",
     "better-sqlite3": "^12.6.2",
     "bumpp": "^10.3.2",
-    "i": "^0.3.7",
-    "npm": "^11.9.0",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"
