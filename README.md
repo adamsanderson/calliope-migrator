@@ -38,6 +38,8 @@ await migrator.migrate()
 
 Calliope assumes an async database interface, but can be used with a synchronous client as well, though you should make sure you treat the migration as `async`. 
 
+It's so small, you can just go ahead and copy the `index.ts` file and use it directly if you like, that's just fine.
+
 ## Configuration
 
 By default, Calliope picks sensible defaults.  In all cases, simply take a look at `src/index.ts` for complete type definitions.
